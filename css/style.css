@@ -1,0 +1,1004 @@
+/* ═══════════════════════════════════════
+   RESET & ROOT
+═══════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ink: #0c0716;
+  --deep: #14102a;
+  --panel: rgba(255,255,255,0.04);
+  --border: rgba(255,255,255,0.09);
+  --gold: #c8923a;
+  --gold-soft: rgba(200,146,58,0.15);
+  --gold-glow: rgba(200,146,58,0.35);
+  --rose: #a82d42;
+  --rose-soft: rgba(168,45,66,0.18);
+  --cream: rgba(255,248,235,0.88);
+  --mist: rgba(255,255,255,0.55);
+  --faint: rgba(255,255,255,0.22);
+  --aff-color: #c8923a;
+}
+html, body {
+  width: 100%; height: 100%;
+  background: var(--ink);
+  overflow: hidden;
+}
+body {
+  font-family: 'Be Vietnam Pro', sans-serif;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ═══════════════════════════════════════
+   GAME CONTAINER — FIXED VIEWPORT
+═══════════════════════════════════════ */
+#game {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background: var(--ink);
+}
+
+/* ═══════════════════════════════════════
+   SCREENS
+═══════════════════════════════════════ */
+.screen {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+}
+.screen.active { display: flex; }
+
+/* ═══════════════════════════════════════
+   HOME SCREEN
+═══════════════════════════════════════ */
+#home {
+  background: linear-gradient(180deg, rgba(12,7,22,0.28), rgba(12,7,22,0.82)),
+              url("../image/Cảnh nơi sống của dân tộc Mông.jpg") center/cover no-repeat;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+}
+
+.home-stars {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.home-stars span {
+  position: absolute;
+  width: 2px; height: 2px;
+  background: white;
+  border-radius: 50%;
+  animation: twinkle var(--d, 3s) infinite var(--delay, 0s);
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0.15; }
+  50% { opacity: 0.7; }
+}
+
+.home-ornament {
+  position: absolute;
+  inset: 20px;
+  border: 1px solid rgba(200,146,58,0.15);
+  border-radius: 4px;
+  pointer-events: none;
+}
+.home-ornament::before, .home-ornament::after {
+  content: '';
+  position: absolute;
+  width: 40px; height: 40px;
+  border-color: rgba(200,146,58,0.4);
+  border-style: solid;
+}
+.home-ornament::before { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
+.home-ornament::after  { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+
+.home-inner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  max-width: 480px;
+}
+
+.home-char-wrap {
+  position: relative;
+  width: 110px; height: 110px;
+  margin-bottom: 1.5rem;
+}
+.home-char-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(200,146,58,0.35);
+  animation: ringPulse 3s ease infinite;
+}
+@keyframes ringPulse {
+  0%, 100% { transform: scale(1); opacity: 0.35; }
+  50% { transform: scale(1.08); opacity: 0.65; }
+}
+.home-char-ring-2 {
+  position: absolute;
+  inset: -12px;
+  border-radius: 50%;
+  border: 1px solid rgba(200,146,58,0.12);
+  animation: ringPulse 3s ease infinite 1s;
+}
+.home-char {
+  width: 100%; height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, rgba(100,80,170,0.4), rgba(60,40,110,0.6));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  border: 1px solid rgba(200,146,58,0.28);
+}
+.home-char img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center bottom;
+}
+
+.home-eyebrow {
+  font-size: 10px;
+  letter-spacing: 5px;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  opacity: 0.8;
+}
+.home-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(52px, 10vw, 80px);
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 4px;
+  background: linear-gradient(160deg, #fff 30%, rgba(200,146,58,0.8));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.home-subtitle {
+  font-size: 13px;
+  color: var(--gold);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 1.6rem;
+  opacity: 0.9;
+}
+.home-tagline {
+  font-size: 15px;
+  color: var(--mist);
+  line-height: 1.9;
+  max-width: 320px;
+  margin-bottom: 2.4rem;
+  font-weight: 300;
+}
+
+.btn-start {
+  background: var(--rose);
+  color: white;
+  border: none;
+  padding: 14px 44px;
+  border-radius: 50px;
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 24px rgba(168,45,66,0.35);
+}
+.btn-start:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(168,45,66,0.45);
+}
+.btn-collect {
+  background: transparent;
+  color: var(--mist);
+  border: 1px solid rgba(255,255,255,0.14);
+  padding: 10px 28px;
+  border-radius: 50px;
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-size: 12px;
+  cursor: pointer;
+  margin-top: 12px;
+  transition: all 0.2s;
+  display: block;
+}
+.btn-collect:hover { color: white; border-color: rgba(255,255,255,0.35); }
+
+/* ═══════════════════════════════════════
+   STORY SCREEN
+═══════════════════════════════════════ */
+#story { background: var(--ink); }
+
+/* Scene area — top 55% */
+.story-scene {
+  position: relative;
+  flex: 0 0 55%;
+  overflow: hidden;
+  background: radial-gradient(ellipse at 50% 0%, #1a3a22 0%, #0a1810 55%, #0c0716 100%);
+  transition: background 0.8s ease;
+}
+
+.scene-layer-sky {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.5) 100%);
+  pointer-events: none;
+}
+.scene-mountains {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+}
+.story-char {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: clamp(112px, 23vw, 178px);
+  aspect-ratio: 1;
+  filter: drop-shadow(0 8px 32px rgba(0,0,0,0.6));
+  transition: all 0.4s ease;
+  user-select: none;
+  z-index: 8;
+}
+.story-char-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+}
+.story-char-emote {
+  position: absolute;
+  top: 4px;
+  right: 0;
+  width: clamp(36px, 7vw, 52px);
+  height: clamp(36px, 7vw, 52px);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(12,7,22,0.82);
+  border: 1px solid rgba(200,146,58,0.42);
+  font-size: clamp(22px, 4.5vw, 32px);
+  line-height: 1;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+  backdrop-filter: blur(6px);
+}
+.story-char.bounce {
+  animation: charBounce 0.4s ease;
+}
+@keyframes charBounce {
+  0%,100% { transform: translateX(-50%) translateY(0); }
+  40% { transform: translateX(-50%) translateY(-12px); }
+}
+
+/* Floating particles in scene */
+.float-particle {
+  position: absolute;
+  pointer-events: none;
+  animation: floatUp 1.6s ease-out forwards;
+  font-size: 18px;
+  z-index: 10;
+}
+@keyframes floatUp {
+  0%   { opacity: 1; transform: translateY(0) scale(0.8); }
+  100% { opacity: 0; transform: translateY(-70px) scale(1.2); }
+}
+
+/* Chapter badge top-left */
+.story-chapter {
+  position: absolute;
+  top: 16px; left: 16px;
+  z-index: 20;
+  background: rgba(12,7,22,0.75);
+  border: 1px solid rgba(200,146,58,0.3);
+  border-radius: 20px;
+  padding: 5px 12px;
+  font-size: 10px;
+  letter-spacing: 2.5px;
+  color: var(--gold);
+  text-transform: uppercase;
+  backdrop-filter: blur(8px);
+}
+
+/* HUD top-right */
+.story-hud {
+  position: absolute;
+  top: 16px; right: 16px;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.hud-back {
+  background: rgba(12,7,22,0.75);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: var(--mist);
+  padding: 5px 11px;
+  border-radius: 20px;
+  font-size: 11px;
+  cursor: pointer;
+  font-family: 'Be Vietnam Pro', sans-serif;
+  transition: color 0.15s;
+  backdrop-filter: blur(8px);
+}
+.hud-back:hover { color: white; }
+.hud-collect {
+  background: rgba(12,7,22,0.75);
+  border: 1px solid rgba(200,146,58,0.25);
+  color: var(--gold);
+  padding: 5px 11px;
+  border-radius: 20px;
+  font-size: 11px;
+  cursor: pointer;
+  font-family: 'Be Vietnam Pro', sans-serif;
+  transition: all 0.15s;
+  backdrop-filter: blur(8px);
+}
+.hud-collect:hover { background: rgba(200,146,58,0.12); }
+
+/* ── AFFECTION METER ── */
+.aff-meter {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  z-index: 15;
+  padding: 0 20px 14px;
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  background: linear-gradient(0deg, rgba(12,7,22,0.9) 0%, transparent 100%);
+}
+.aff-face {
+  font-size: 28px;
+  flex-shrink: 0;
+  transition: all 0.4s;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5));
+}
+.aff-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-bottom: 2px;
+}
+.aff-label-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+.aff-status {
+  font-family: 'Playfair Display', serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gold);
+  font-style: italic;
+  transition: all 0.4s;
+}
+.aff-pts {
+  font-size: 10px;
+  color: var(--mist);
+  letter-spacing: 1px;
+}
+.aff-track {
+  height: 4px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 2px;
+  overflow: visible;
+  position: relative;
+}
+.aff-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--rose) 0%, var(--gold) 100%);
+  border-radius: 2px;
+  transition: width 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+}
+.aff-fill::after {
+  content: '';
+  position: absolute;
+  right: -2px; top: -4px;
+  width: 12px; height: 12px;
+  background: var(--gold);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--gold-glow);
+}
+.aff-milestones {
+  position: absolute;
+  inset: -2px;
+  pointer-events: none;
+}
+.aff-tick {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+.aff-tick.passed {
+  background: var(--gold);
+  border-color: var(--gold);
+}
+/* aff gain flash */
+.aff-gain {
+  position: absolute;
+  top: -28px; right: 0;
+  font-size: 12px;
+  color: var(--gold);
+  font-weight: 600;
+  opacity: 0;
+  pointer-events: none;
+  animation: gainFloat 1.4s ease-out forwards;
+}
+@keyframes gainFloat {
+  0% { opacity: 0; transform: translateY(0); }
+  20% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(-20px); }
+}
+
+/* ── DIALOGUE AREA — bottom 45% ── */
+.story-dialogue {
+  flex: 1;
+  background: linear-gradient(180deg, var(--ink) 0%, #100d20 100%);
+  display: flex;
+  flex-direction: column;
+  padding: 14px 18px 16px;
+  gap: 10px;
+  overflow: hidden;
+}
+
+.speaker-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.speaker-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--gold);
+}
+.speaker-mood {
+  font-size: 11px;
+  color: rgba(255,255,255,0.3);
+  font-style: italic;
+  padding-left: 4px;
+}
+
+.dialogue-text {
+  font-size: 14px;
+  line-height: 1.8;
+  color: rgba(255,255,255,0.88);
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 16px;
+  min-height: 70px;
+  transition: opacity 0.25s;
+  flex-shrink: 0;
+}
+.dialogue-text.fading { opacity: 0; }
+
+.choices-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  overflow-y: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.choices-wrap::-webkit-scrollbar { display: none; }
+
+.choice {
+  background: rgba(74,58,138,0.1);
+  border: 1px solid rgba(74,58,138,0.28);
+  color: rgba(255,255,255,0.8);
+  padding: 9px 14px;
+  border-radius: 10px;
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-size: 13px;
+  cursor: pointer;
+  text-align: left;
+  line-height: 1.55;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+.choice:hover {
+  background: rgba(74,58,138,0.22);
+  border-color: rgba(74,58,138,0.55);
+  color: white;
+  transform: translateX(3px);
+}
+.choice:disabled { opacity: 0.3; cursor: default; transform: none; }
+
+/* mini-game trigger choice — glows */
+.choice.mg-trigger {
+  background: linear-gradient(135deg, rgba(200,146,58,0.12), rgba(168,45,66,0.12));
+  border-color: rgba(200,146,58,0.45);
+  color: var(--gold);
+  animation: mgGlow 2.5s ease infinite;
+}
+@keyframes mgGlow {
+  0%, 100% { box-shadow: none; }
+  50% { box-shadow: 0 0 14px rgba(200,146,58,0.2); }
+}
+.choice.mg-trigger:hover {
+  background: linear-gradient(135deg, rgba(200,146,58,0.22), rgba(168,45,66,0.22));
+  transform: translateX(3px);
+}
+
+/* ─ end screen special btn ─ */
+.choice.end-btn {
+  background: var(--rose-soft);
+  border-color: var(--rose);
+  color: white;
+  text-align: center;
+  font-weight: 500;
+}
+
+/* ═══════════════════════════════════════
+   KNOWLEDGE UNLOCK OVERLAY
+═══════════════════════════════════════ */
+.k-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(12,7,22,0.82);
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+  backdrop-filter: blur(4px);
+}
+.k-overlay.show { opacity: 1; pointer-events: all; }
+
+.k-card {
+  background: #1a1038;
+  border: 1px solid rgba(200,146,58,0.45);
+  border-radius: 16px;
+  padding: 1.6rem 1.8rem;
+  max-width: 300px;
+  width: 88%;
+  text-align: center;
+  transform: scale(0.9);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.k-overlay.show .k-card { transform: scale(1); }
+.k-card-icon { font-size: 36px; margin-bottom: 10px; }
+.k-card-eyebrow {
+  font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 6px;
+}
+.k-card-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px; color: white; margin-bottom: 8px;
+}
+.k-card-text {
+  font-size: 13px; line-height: 1.7;
+  color: rgba(255,255,255,0.75); margin-bottom: 12px;
+}
+.k-card-count { font-size: 10px; color: var(--gold); margin-bottom: 14px; }
+.k-card-btn {
+  background: var(--gold); color: #1a1225;
+  border: none; padding: 8px 22px; border-radius: 20px;
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-size: 13px; font-weight: 600; cursor: pointer;
+  transition: opacity 0.15s;
+}
+.k-card-btn:hover { opacity: 0.88; }
+
+/* ═══════════════════════════════════════
+   LEVEL-UP OVERLAY
+═══════════════════════════════════════ */
+.lvlup-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 55;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  opacity: 0;
+}
+.lvlup-overlay.show {
+  animation: lvlupAnim 2.4s ease-out forwards;
+}
+@keyframes lvlupAnim {
+  0%  { opacity: 0; }
+  15% { opacity: 1; }
+  75% { opacity: 1; }
+  100%{ opacity: 0; }
+}
+.lvlup-card {
+  background: linear-gradient(135deg, rgba(168,45,66,0.9), rgba(100,60,160,0.9));
+  border: 1px solid rgba(200,146,58,0.5);
+  border-radius: 16px;
+  padding: 1.4rem 2rem;
+  text-align: center;
+  backdrop-filter: blur(8px);
+}
+.lvlup-label { font-size: 10px; letter-spacing: 3px; color: var(--gold); margin-bottom: 6px; }
+.lvlup-status {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px; font-style: italic; color: white;
+}
+
+/* ═══════════════════════════════════════
+   TRANSITION SCREEN
+═══════════════════════════════════════ */
+#transition {
+  background: var(--ink);
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1.2rem;
+  text-align: center;
+  padding: 2rem;
+}
+.tr-emoji { font-size: 64px; animation: trBounce 0.7s ease infinite alternate; }
+@keyframes trBounce {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-14px); }
+}
+.tr-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px; color: var(--gold);
+}
+.tr-sub { font-size: 14px; color: var(--mist); max-width: 240px; line-height: 1.7; }
+.tr-bar { width: 180px; height: 3px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden; margin-top: 0.5rem; }
+.tr-fill { height: 100%; background: var(--gold); border-radius: 2px; animation: trFill 1.3s ease forwards; }
+@keyframes trFill { from { width: 0; } to { width: 100%; } }
+
+/* ═══════════════════════════════════════
+   KÈNN LÁ MINI GAME
+═══════════════════════════════════════ */
+#kenla { background: #0a0c14; }
+
+.mg-topbar {
+  flex-shrink: 0;
+  padding: 12px 18px;
+  background: rgba(255,255,255,0.03);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.mg-topbar-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 15px; color: var(--gold); flex: 1; font-style: italic;
+}
+.mg-aff-row {
+  display: flex; align-items: center; gap: 7px; font-size: 11px; color: var(--gold);
+}
+.mg-aff-bar { width: 70px; height: 3px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden; }
+.mg-aff-fill { height: 100%; background: linear-gradient(90deg, var(--rose), var(--gold)); border-radius: 2px; transition: width 0.6s ease; }
+
+/* scene */
+.kl-scene {
+  flex: 0 0 38%;
+  position: relative;
+  background: linear-gradient(180deg, rgba(7,8,12,0.12), rgba(10,12,20,0.6)), url("../image/Kèn lá người mông.jpg") center/cover no-repeat;
+  overflow: hidden;
+}
+.kl-scene-mtn {
+  position: absolute; bottom: 0; left: 0; right: 0;
+}
+.kl-my {
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: clamp(86px, 18vw, 128px);
+  aspect-ratio: 1;
+  filter: drop-shadow(0 6px 20px rgba(0,0,0,0.5));
+  transition: all 0.4s;
+  z-index: 3;
+}
+.kl-player {
+  position: absolute;
+  bottom: 4px; right: 44px;
+  font-size: clamp(50px, 12vw, 76px);
+  transform: scaleX(-1);
+}
+.kl-bubble {
+  position: absolute;
+  bottom: clamp(70px, 16vw, 100px);
+  left: 50%;
+  transform: translate(-50%, 8px);
+  background: rgba(12,7,22,0.92);
+  border: 1px solid rgba(200,146,58,0.45);
+  border-radius: 12px 12px 4px 12px;
+  padding: 8px 12px;
+  max-width: 200px;
+  font-size: 12px;
+  line-height: 1.6;
+  color: rgba(255,255,255,0.9);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: all 0.35s;
+  z-index: 5;
+}
+.kl-bubble.show { opacity: 1; transform: translate(-50%, 0); }
+.kl-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -7px; left: 50%;
+  transform: translateX(-50%);
+  width: 12px; height: 7px;
+  background: rgba(12,7,22,0.92);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+
+/* game panel */
+.kl-panel {
+  flex: 1;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow: hidden;
+}
+
+.kl-status { display: flex; align-items: center; justify-content: space-between; }
+.kl-level {
+  background: var(--gold-soft);
+  border: 1px solid rgba(200,146,58,0.35);
+  color: var(--gold);
+  font-size: 10px;
+  letter-spacing: 2px;
+  padding: 3px 11px;
+  border-radius: 20px;
+}
+.kl-actions { display: flex; gap: 7px; }
+.kl-btn {
+  padding: 7px 16px;
+  border-radius: 24px;
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+  border: 1px solid;
+}
+.kl-btn-primary { background: var(--rose); color: white; border-color: var(--rose); box-shadow: 0 2px 12px rgba(168,45,66,0.3); }
+.kl-btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+.kl-btn-primary:disabled { opacity: 0.3; cursor: default; transform: none; box-shadow: none; }
+.kl-btn-ghost { background: transparent; color: var(--mist); border-color: rgba(255,255,255,0.18); }
+.kl-btn-ghost:hover { color: white; border-color: rgba(255,255,255,0.38); }
+.kl-btn-ghost:disabled { opacity: 0.3; cursor: default; }
+
+.melody-display {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 54px;
+  flex-wrap: wrap;
+}
+.melody-placeholder { font-size: 12px; color: rgba(255,255,255,0.28); }
+.note-pill {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  font-size: 17px;
+  display: flex; align-items: center; justify-content: center;
+  border: 2px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.04);
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.note-pill.lit { transform: scale(1.3); border-color: var(--gold); background: rgba(200,146,58,0.15); }
+.note-pill.hit { border-color: #5fcf7a; background: rgba(95,207,122,0.15); }
+.note-pill.miss { border-color: #e05555; background: rgba(224,85,85,0.15); animation: noteMiss 0.3s ease; }
+@keyframes noteMiss { 0%,100%{transform:translateX(0)}30%{transform:translateX(-4px)}70%{transform:translateX(4px)} }
+
+.dot-track { display: flex; gap: 5px; align-items: center; }
+.dt-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.12); transition: all 0.25s; }
+.dt-dot.hit { background: #5fcf7a; }
+.dt-dot.miss { background: #e05555; }
+.dt-dot.cur { background: var(--gold); box-shadow: 0 0 6px rgba(200,146,58,0.6); }
+
+.kl-keys { display: flex; gap: 8px; justify-content: center; }
+.kl-key {
+  flex: 1;
+  max-width: 64px;
+  aspect-ratio: 1;
+  border-radius: 12px;
+  border: 1.5px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.05);
+  font-size: 22px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  transition: all 0.14s;
+  position: relative;
+  overflow: hidden;
+}
+.kl-key:hover { background: rgba(255,255,255,0.1); transform: translateY(-2px); border-color: rgba(255,255,255,0.3); }
+.kl-key:active { transform: scale(0.92); }
+.kl-key.active { background: rgba(200,146,58,0.2); border-color: var(--gold); }
+.kl-key-lbl { font-size: 8px; color: rgba(255,255,255,0.3); letter-spacing: 0.5px; }
+
+.kl-resp {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 11px 14px;
+  display: none;
+  gap: 8px;
+  flex-direction: column;
+}
+.kl-resp.show { display: flex; }
+.kl-resp-mood { font-size: 10px; color: rgba(255,255,255,0.3); font-style: italic; }
+.kl-resp-spkr { font-size: 10px; color: var(--gold); letter-spacing: 1px; }
+.kl-resp-text { font-size: 13px; line-height: 1.7; color: rgba(255,255,255,0.87); }
+.kl-resp-btns { display: flex; gap: 7px; flex-wrap: wrap; margin-top: 2px; }
+
+/* ═══════════════════════════════════════
+   TRANG PHỤC MINI GAME
+═══════════════════════════════════════ */
+#trangphuc { background: #0a0c14; }
+
+.tp-scene {
+  flex: 0 0 34%;
+  position: relative;
+  background: linear-gradient(180deg, rgba(7,8,12,0.14), rgba(10,12,20,0.62)), url("../image/Váy phụ nữ mông.jpg") center/cover no-repeat;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 12px;
+  gap: 20px;
+}
+.tp-scene-mtn { position: absolute; bottom: 0; left: 0; right: 0; }
+.tp-mannequin { text-align: center; position: relative; z-index: 2; }
+.tp-mannequin-body { font-size: clamp(52px, 12vw, 80px); line-height: 1; filter: drop-shadow(0 4px 14px rgba(0,0,0,0.6)); }
+.tp-mannequin-lbl { font-size: 9px; letter-spacing: 2px; color: var(--gold); margin-top: 3px; }
+.tp-slots { display: flex; gap: 5px; margin-top: 5px; justify-content: center; }
+.tp-slot {
+  width: 24px; height: 24px;
+  border-radius: 6px;
+  border: 1.5px dashed rgba(255,255,255,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+  background: rgba(255,255,255,0.04);
+  transition: all 0.2s;
+}
+.tp-slot.filled { border-style: solid; border-color: var(--gold); background: rgba(200,146,58,0.1); }
+
+.tp-panel {
+  flex: 1;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  overflow: hidden;
+}
+.tp-stage-row { display: flex; align-items: center; justify-content: space-between; }
+.tp-stage-lbl { font-size: 10px; letter-spacing: 2px; color: rgba(255,255,255,0.35); text-transform: uppercase; }
+.tp-instruct { font-size: 12.5px; color: var(--mist); line-height: 1.6; }
+.tp-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 7px;
+}
+.tp-item {
+  background: var(--panel);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 8px 4px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.tp-item:hover { background: rgba(255,255,255,0.08); transform: translateY(-2px); }
+.tp-item.selected { border-color: var(--gold); background: rgba(200,146,58,0.1); }
+.tp-item.correct { border-color: #5fcf7a; background: rgba(95,207,122,0.1); }
+.tp-item.wrong { border-color: #e05555; background: rgba(224,85,85,0.1); animation: noteMiss 0.3s; }
+.tp-item.disabled { opacity: 0.3; pointer-events: none; }
+.tp-item-e { font-size: 22px; margin-bottom: 3px; }
+.tp-item-n { font-size: 9px; color: rgba(255,255,255,0.5); line-height: 1.3; }
+.tp-score-row { font-size: 11px; color: rgba(255,255,255,0.35); text-align: right; }
+
+.tp-resp {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 11px 14px;
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+}
+.tp-resp.show { display: flex; }
+.tp-resp-mood { font-size: 10px; color: rgba(255,255,255,0.3); font-style: italic; }
+.tp-resp-spkr { font-size: 10px; color: var(--gold); letter-spacing: 1px; }
+.tp-resp-text { font-size: 13px; line-height: 1.7; color: rgba(255,255,255,0.87); }
+.tp-resp-btns { display: flex; gap: 7px; flex-wrap: wrap; margin-top: 4px; }
+
+/* ═══════════════════════════════════════
+   COLLECTION SCREEN
+═══════════════════════════════════════ */
+#collect {
+  background: var(--ink);
+  overflow-y: auto;
+  padding: 20px 18px;
+}
+.col-topbar { display: flex; align-items: center; gap: 10px; margin-bottom: 1.4rem; }
+.col-title { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--gold); flex: 1; }
+.col-progress-wrap { margin-bottom: 1.4rem; }
+.col-prog-bar { height: 4px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; }
+.col-prog-fill { height: 100%; background: linear-gradient(90deg, var(--rose), var(--gold)); border-radius: 2px; transition: width 0.5s; }
+.col-prog-lbl { font-size: 11px; color: rgba(255,255,255,0.3); margin-top: 5px; text-align: right; }
+.col-group { margin-bottom: 1.4rem; }
+.col-group-lbl { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.28); margin-bottom: 8px; }
+.col-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; }
+.col-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 10px;
+  text-align: center;
+  cursor: default;
+}
+.col-card.locked { opacity: 0.3; filter: grayscale(1); }
+.col-card-icon { font-size: 24px; margin-bottom: 6px; }
+.col-card-title { font-size: 11px; color: rgba(255,255,255,0.75); line-height: 1.4; margin-bottom: 3px; }
+.col-card-preview { font-size: 10px; color: rgba(255,255,255,0.3); line-height: 1.4; }
+
+/* ═══════════════════════════════════════
+   SCENE BACKGROUNDS
+═══════════════════════════════════════ */
+.bg-village  { background: linear-gradient(180deg, rgba(7,8,12,0.18), rgba(12,7,22,0.58)), url("../image/Cảnh dân tộc Mông.png") center/cover no-repeat !important; }
+.bg-home     { background: linear-gradient(180deg, rgba(7,8,12,0.16), rgba(12,7,22,0.6)), url("../image/Nhà người Mông.JPG") center/cover no-repeat !important; }
+.bg-market   { background: linear-gradient(180deg, rgba(7,8,12,0.12), rgba(12,7,22,0.6)), url("../image/Chợ Phiên Hà Giang.jpg") center/cover no-repeat !important; }
+.bg-festival { background: linear-gradient(180deg, rgba(7,8,12,0.12), rgba(12,7,22,0.6)), url("../image/Tết Mông.jpg") center/cover no-repeat !important; }
+.bg-mountain { background: linear-gradient(180deg, rgba(7,8,12,0.12), rgba(12,7,22,0.6)), url("../image/Cảnh nơi sống của dân tộc Mông.jpg") center/cover no-repeat !important; }
+.bg-cuocsong { background: linear-gradient(180deg, rgba(7,8,12,0.12), rgba(12,7,22,0.6)), url("../image/Cuộc sống người Mông.png") center/cover no-repeat !important; }
+.bg-nhatuong { background: linear-gradient(180deg, rgba(7,8,12,0.12), rgba(12,7,22,0.62)), url("../image/Nhà tường đất.jpg") center/cover no-repeat !important; }
+.bg-theu     { background: linear-gradient(180deg, rgba(7,8,12,0.14), rgba(12,7,22,0.62)), url("../image/Nghề thêu truyền thống.jpg") center/cover no-repeat !important; }
+.bg-vay      { background: linear-gradient(180deg, rgba(7,8,12,0.14), rgba(12,7,22,0.62)), url("../image/Váy phụ nữ mông.jpg") center/cover no-repeat !important; }
+.bg-menmen   { background: linear-gradient(180deg, rgba(7,8,12,0.14), rgba(12,7,22,0.62)), url("../image/mèn mén người mông.jpg") center/cover no-repeat !important; }
+.bg-ruou     { background: linear-gradient(180deg, rgba(7,8,12,0.14), rgba(12,7,22,0.62)), url("../image/Rượu ngô men lá của người mông.jpg") center/cover no-repeat !important; }
+.bg-kenla    { background: linear-gradient(180deg, rgba(7,8,12,0.14), rgba(12,7,22,0.62)), url("../image/Kèn lá người mông.jpg") center/cover no-repeat !important; }
+.bg-khen     { background: linear-gradient(180deg, rgba(7,8,12,0.14), rgba(12,7,22,0.62)), url("../image/Khèn của người mông.jpg") center/cover no-repeat !important; }
+.bg-tet      { background: linear-gradient(180deg, rgba(7,8,12,0.12), rgba(12,7,22,0.6)), url("../image/Tết Mông.jpg") center/cover no-repeat !important; }
+.bg-chophien { background: linear-gradient(180deg, rgba(7,8,12,0.12), rgba(12,7,22,0.58)), url("../image/Chợ Phiên Hà Giang.jpg") center/cover no-repeat !important; }
+.bg-chotinh  { background: linear-gradient(180deg, rgba(7,8,12,0.12), rgba(12,7,22,0.58)), url("../image/Chợ tình khâu vai.jpg") center/cover no-repeat !important; }
+
+/* Styling cho suy nghĩ và lời nói trong lựa chọn */
+.choice-th {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.45);
+  font-style: italic;
+  margin-bottom: 5px;
+  line-height: 1.3;
+}
+.choice-sp {
+  font-weight: 500;
+}
+.choice:hover .choice-th {
+  color: rgba(255, 255, 255, 0.7);
+}
