@@ -990,15 +990,23 @@ body {
 
 /* Styling cho suy nghĩ và lời nói trong lựa chọn */
 .choice-th {
-  font-size: 11px;
-  color: rgba(255, 255, 255, 0.45);
+  font-size: 12.5px; /* Tăng từ 11px lên 12.5px để dễ đọc hơn */
+  color: rgba(255, 255, 255, 0.7); /* Tăng độ sáng để không bị chìm vào nền đen */
   font-style: italic;
-  margin-bottom: 5px;
-  line-height: 1.3;
+  margin-bottom: 8px;
+  line-height: 1.4;
+  border-left: 2px solid rgba(255, 255, 255, 0.2); /* Thêm một đường viền xám nhẹ bên trái */
+  padding-left: 10px; /* Đẩy chữ cách viền ra một chút tạo không gian */
 }
+
 .choice-sp {
+  font-size: 14px; /* Lời nói to, rõ ràng và có trọng lượng hơn */
   font-weight: 500;
+  color: #ffffff;
 }
+
+/* Hiệu ứng khi người chơi di chuột (hover) vào lựa chọn */
 .choice:hover .choice-th {
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.95); /* Chữ nội tâm sáng rực lên */
+  border-left-color: var(--gold); /* Đường viền đổi sang màu vàng đặc trưng của game */
 }
