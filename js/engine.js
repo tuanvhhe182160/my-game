@@ -55,6 +55,27 @@ function playNote(freq, dur = 0.28, delay = 0) {
   o.start(t); o.stop(t + dur + 0.05);
 }
 
+// --- BỘ QUẢN LÝ NHẠC NỀN (BGM) CẬP NHẬT ---
+const BGM = {
+  main: new Audio('audio/bgm_main.mp3'),
+  
+  init() {
+    this.main.loop = true; // Lặp lại liên tục
+    this.main.volume = 0.35; // Âm lượng vừa phải
+  },
+  
+  playMain() {
+    this.main.play().catch(e => console.log("Đang chờ tương tác để phát nhạc"));
+  },
+  
+  pauseMain() {
+    this.main.pause();
+  }
+};
+
+// Gọi khởi tạo cài đặt âm lượng
+BGM.init();
+// --------------------------------------
 // ─────────────────────────────────────
 // SCREEN MANAGER
 // ─────────────────────────────────────
@@ -72,6 +93,7 @@ const G = {
        S.klBestScore = 0;
       S.tpTotalScore = 0;
 	this.updateAff();
+	BGM.playMain();
     show('story');
     this.loadNode('c1_a');
   },
@@ -255,6 +277,12 @@ const G = {
     const fill = document.getElementById('tr-fill');
     fill.style.animation = 'none'; void fill.offsetWidth; fill.style.animation = '';
     show('transition');
+// --- ĐIỀU CHỈNH NHẠC THEO LOẠI GAME ---
+    if (type === 'kl') {
+      BGM.pauseMain(); 
+    }
+    // -------------------------------------
+
     setTimeout(() => {
       if (type === 'kl') { show('kenla'); KL.init(); }
       else { show('trangphuc'); TP.init(); }
@@ -268,6 +296,9 @@ const G = {
     const fill = document.getElementById('tr-fill');
     fill.style.animation = 'none'; void fill.offsetWidth; fill.style.animation = '';
     show('transition');
+// --- BẬT LẠI NHẠC NỀN CHÍNH ---
+    BGM.playMain();
+    // ------------------------------
     setTimeout(() => { show('story'); this.loadNode(resultNodeId); }, 1100);
   }
 };
