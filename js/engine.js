@@ -2,6 +2,7 @@
 // STATE
 // ─────────────────────────────────────
 const S = {
+playerName: 'Bạn',
   aff: 0,
   kUnlocked: new Set(),
   curNode: 'c1_a',
@@ -89,6 +90,9 @@ function show(id) {
 // ─────────────────────────────────────
 const G = {
   start() {
+	const nameInput = document.getElementById('name-input').value.trim();
+    // Nếu có nhập thì lấy tên đó, không thì gọi là 'Khách'
+    S.playerName = nameInput !== '' ? nameInput : 'Khách';
 	S.aff = 0;
        S.klBestScore = 0;
       S.tpTotalScore = 0;
@@ -129,7 +133,8 @@ const G = {
 
     const db = document.getElementById('s-dialogue');
     db.classList.add('fading');
-    setTimeout(() => { db.textContent = n.txt; db.classList.remove('fading'); }, 220);
+	let modifiedText = n.txt.replace(/\[Tên\]/g, S.playerName);
+    setTimeout(() => { db.textContent = modifiedText; db.classList.remove('fading'); }, 220);
 
     const sc = document.querySelector('.story-scene');
     sc.className = 'story-scene ' + resolveSceneBg(n);
@@ -160,13 +165,15 @@ const G = {
       // Khởi tạo nội dung nút bấm
       let content = '';
       
-      // Nếu có suy nghĩ nội tâm, thêm vào một thẻ div riêng
+      // Xử lý phần suy nghĩ (th)
       if (c.th) {
-        content += `<div class="choice-th">"${c.th}"</div>`;
+        let thought = c.th.replace(/\[Tên\]/g, S.playerName);
+        content += `<div class="choice-th">"${thought}"</div>`;
       }
       
-      // Phần lời nói (có icon nếu là minigame)
-      let spoken = c.mg === 'kl' ? '🍃 ' + c.t : c.mg === 'tp' ? '👗 ' + c.t : c.t;
+      // Xử lý phần lời nói (t)
+      let spokenText = c.t.replace(/\[Tên\]/g, S.playerName);
+      let spoken = c.mg === 'kl' ? '🍃 ' + spokenText : c.mg === 'tp' ? '👗 ' + spokenText : spokenText;
       content += `<div class="choice-sp">${spoken}</div>`;
 
       b.innerHTML = content;
@@ -174,6 +181,7 @@ const G = {
       if (c.n === '__END__') b.classList.add('end-btn');
       if (c.n === '__RESTART__') b.classList.add('end-btn');
       if (c.n === '__COLLECT__') b.classList.add('end-btn');
+      
       b.onclick = () => this.pick(c);
       ca.appendChild(b);
     });
